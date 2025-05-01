@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DescomplicaDoc</title>
+    <!-- Usando CDN para Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	<link rel="stylesheet" href="/css/index.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+</head>
+<body class="special-gothic-regular" >
+	
+	<div th:replace="~{fragmentos/frag :: cabecalho}"></div>
+	
+	<section class="py-5 text-white" style="background: linear-gradient(to bottom, #1c1c1c, #422f6f);">
+	    <div class="container" style="padding-top: 70px; padding-bottom: 90px;">
+	        <div class="row justify-content-center text-center">
+	            <div class="col-lg-8">
+	                <img src="/img/logoSolo.png" width="100px" class="img-fluid mb-4" alt="Logo">
+	                <h1 class="display-5 fw-bold">Tradutor de <span style="color: #c4aff0;">Burocracia</span></h1>
+	                <p class="lead mb-4">
+						Chega de juridiquês. Traduza documentos complexos com clareza, em segundos.<br>
+						Mais segurança, menos tempo perdido e honorários valorizados.
+	                </p>
+	                <div class="mb-5">
+	                    <a href="/login" class="btn btn-warning  fw-bold me-3 mb-2" style="background-color: #90ee90; border-color: white;">
+	                        TESTE GRÁTIS
+	                        <img src="https://chatadv.com.br/wp-content/uploads/2024/12/Vector.svg" class="ms-2" alt="Icone">
+	                    </a>
+	                    <a href="#planos" class="btn btn-outline-light fw-bold mb-2">
+	                        NOSSOS PLANOS
+	                        <img src="https://chatadv.com.br/wp-content/uploads/2024/12/Vector-1.svg" class="ms-2" alt="Icone">
+	                    </a>
+	                </div>
+	            </div>
+	        </div>
+
+			<div class="row justify-content-center mt-4">
+			    <div class="col-auto d-flex align-items-center justify-content-center flex-wrap">
+			        <div class="text-start text-white" style="margin-left: 20px;">
+			            <div class="h5 fw-bold mb-0">+8.000 Clientes Satisfeitos</div>
+			        </div>
+			    </div>
+			</div>
+
+	</section>
+	
+	<!-- Faixa separadora -->
+	<section style="background-color: #1c1c1c; height: 60px; display: flex; align-items: center; justify-content: center;">
+	  <span style="color: white; font-size: 14px; letter-spacing: 1px;">Traduza contratos, leis e editais. 
+		Em segundos. Com clareza. Sem juridiquês.</span>
+	</section>
+	
+	
+	<section class="secao7 py-5" style="background-color: #1c1c1c;">
+		  <div class="container" style="color: white;" data-aos="flip-up">
+		    <div class="row justify-content-center g-4" > <!-- Adiciona espaçamento entre as colunas -->
+		      
+		      <!-- Microserviço DescomplicaDoc -->
+		      <div class="col-md-4 mb-3 d-flex">
+		        <div class="box-bene p-4 flex-fill" style="border: 2px solid #464444; border-radius: 10px; background-color: #333; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);">
+		          <h3 class="text-center" style="color: #90EE90;">Traduza Documentos de Forma Simples</h3>
+		          <p class="text-center">Transforme contratos, termos de uso e editais complicados em explicações claras e objetivas</p>
+		          <p class="text-center"><strong>Entenda o que você assina!</strong></p>
+		        </div>
+		      </div>
+
+		      <!-- Microserviço Inovador -->
+		      <div class="col-md-4 mb-3 d-flex">
+		        <div class="box-bene p-4 flex-fill" style="border: 2px solid #464444; border-radius: 10px; background-color: #333; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);">
+		          <h3 class="text-center" style="color: #90EE90;">Tradução Automática de Burocracia</h3>
+		          <p class="text-center">Nosso microserviço oferece tradução automática de documentos jurídicos e burocráticos para linguagem simples</p>
+		          <p class="text-center"><strong>Ideal para empresas, advogados e cidadãos!</strong></p>
+		        </div>
+		      </div>
+
+		      <!-- Modelos de Cobrança e Funcionalidade -->
+		      <div class="col-md-4 mb-3 d-flex">
+		        <div class="box-bene p-4 flex-fill" style="border: 2px solid #464444; border-radius: 10px; background-color: #333; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);">
+		          <h3 class="text-center" style="color: #90EE90;">Soluções Flexíveis para Todos os Usos</h3>
+		          <p class="text-center">Escolha entre planos de pagamento ou pagamento por documento. A melhor solução para cada cliente</p>
+		          <p class="text-center"><strong>Freemium, Avulso ou Plano Social!</strong></p>
+		        </div>
+		      </div>
+
+		    </div>
+		  </div>
+		</section>
+	
+	
+	<section class="py-5 " style="background: linear-gradient(to top, #1c1c1c, #422f6f); color: white;"  id="beneficios">
+	  <div class="container" style="padding-top: 50px; padding-bottom: 50px;">
+	    <div class="row justify-content-center align-items-center">
+	      
+	      <!-- Imagem -->
+	      <div class="col-md-5 col-8 mb-4 text-center" data-aos="fade-right" data-aos-delay="300" >
+			<img src="/img/confianca.png" class="img-fluid" alt="Imagem Benefícios" width="400px">
+	      </div>
+
+	      <!-- Conteúdo -->
+	      <div class="col-md-7" style="font-size: 25px;">
+	        <h2 class="h2 mb-3 font-weight-bold" data-aos="fade-up" data-aos-delay="300">Benefícios</h2>
+	        <p class="lead mb-4" data-aos="fade-up" data-aos-delay="300">
+	          Vantagens de usar o <strong>DescomplicaDoc</strong>
+	        </p>
+	        <ul class="list-unstyled pl-3" >
+	          <li class="mb-2" data-aos="fade-up" data-aos-delay="300" style="color: #90ee90;">✓ Automatize documentos jurídicos em segundos</li>
+	          <li class="mb-2" data-aos="fade-up" data-aos-delay="300" style="color: #90ee90;">✓ Reduza erros e retrabalho com IA especializada</li>
+	          <li class="mb-2" data-aos="fade-up" data-aos-delay="300" style="color: #90ee90;">✓ Ganhe mais tempo para focar no estratégico</li>
+	          <li class="mb-2" data-aos="fade-up" data-aos-delay="300" style="color: #90ee90;">✓ Tenha uma base de conhecimento jurídica atualizada</li>
+	          <li class="mb-2" data-aos="fade-up" data-aos-delay="300" style="color: #90ee90;">✓ Interface simples e intuitiva para qualquer cliente</li>
+	          <li class="mb-2" data-aos="fade-up" data-aos-delay="300" style="color: #90ee90;">✓ Segurança e confidencialidade de dados</li>
+	        </ul>
+	      </div>
+
+	    </div>
+	  </div>
+	</section>
+	
+	
+	
+	<section class="container-fluid py-5" style="background: linear-gradient(to bottom, #1c1c1c, #422f6f);" id="planos">
+	  <div class="container">
+	    <div class="row justify-content-center">
+
+	      <!-- Standard -->
+	      <div class="col-md-4 mb-4">
+	        <div class="card h-100 shadow bg-dark text-white" data-aos="zoom-in">
+	          <div class="card-body">
+	            <div class="text-center">
+				  <img style="filter: brightness(0) saturate(100%) invert(71%) sepia(19%) saturate(681%) hue-rotate(110deg);" src="/img/logoSolo.png" class="img-fluid mb-3" alt="Starter" width="100px">
+	              <h5 class="fw-bold text-white">Standard</h5>
+	              <p class="text-muted">Plano Intermediário</p>
+	              <p><strong class="fs-4">R$32</strong><br><small>Plano mensal</small></p>
+	              <a href="https://app2.chatadv.com.br/checkout?" class="btn btn-warning mt-4 text-white">ASSINE AGORA</a>
+	            </div>
+	            <ul class="list-unstyled text-start mt-3">
+	              <li>✔ Gratis por 3 dias</li>
+	              <li>✔ Limite de uso por dia (80 documentos)</li>
+	              <li>✔ Resumo de boletos e termos de uso</li>
+	              <li>✔ Explicação de editais de concurso</li>
+	              <li>✔ Upload de PDFs</li>
+	              <li>✔ Retorno direto via Web</li>
+	              <li>✔ IA treinada com linguagem acessível</li>
+	              <li>✔ Suporte por e-mail e chat</li>
+	            </ul>
+	          </div>
+	        </div>
+	      </div>
+
+	      <!-- Premium -->
+	      <div class="col-md-4 mb-4">
+	        <div class="card h-100 shadow bg-dark text-white border border-warning border-3" data-aos="zoom-in" data-aos-delay="200">
+	          <div class="card-body">
+	            <div class="text-center">
+				  <img style="filter: brightness(0) saturate(100%) invert(75%) sepia(70%) saturate(600%) hue-rotate(10deg);" src="/img/logoSolo.png" class="img-fluid mb-3" alt="Starter" width="100px">
+	              <h5 class="fw-bold text-white">Premium</h5>
+	              <p class="text-muted">Plano Avançado</p>
+	              <p><strong class="fs-4">R$56</strong><br><small>Plano mensal</small></p>
+	              <a href="https://app2.chatadv.com.br/checkout?" class="btn btn-warning mt-4 text-white">ASSINE AGORA</a>
+	            </div>
+	            <ul class="list-unstyled text-start mt-3">
+	              <li>✔ Gratis por 5 dias</li>
+	              <li>✔ Limite de uso por dia Ilimitado</li>
+	              <li>✔ Tradução de contratos bancários</li>
+	              <li>✔ Resumo de boletos e termos de uso</li>
+	              <li>✔ Explicação de editais de concurso</li>
+	              <li>✔ Upload de PDFs complexos</li>
+	              <li>✔ Retorno direto via Web</li>
+	              <li>✔ IA treinada com linguagem acessível</li>
+	              <li>✔ Suporte priorizado</li>
+	            </ul>
+	          </div>
+	        </div>
+	      </div>
+
+	      <!-- Starter -->
+	      <div class="col-md-4 mb-4">
+	        <div class="card h-100 shadow bg-dark text-white" data-aos="zoom-in" data-aos-delay="400">
+	          <div class="card-body">
+	            <div class="text-center">
+	              <img src="/img/logoSolo.png" class="img-fluid mb-3" alt="Starter" width="100px">
+	              <h5 class="fw-bold text-white">Starter</h5>
+	              <p class="text-muted">Plano Inicial</p>
+	              <p><strong class="fs-4">R$9.90</strong><br><small>Plano mensal</small></p>
+	              <a href="https://app2.chatadv.com.br/checkout?" class="btn btn-warning mt-4 text-white">ASSINE AGORA</a>
+	            </div>
+	            <ul class="list-unstyled text-start mt-3">
+	              <li>✔ Limite de uso por dia (25 documentos)</li>
+	              <li>✔ Tradução de contratos bancários</li>
+	              <li>✔ Resumo de boletos e termos de uso</li>
+	              <li>✔ Explicação de editais de concurso</li>
+	              <li>✔ Upload de PDFs simples</li>
+	              <li>✔ Retorno direto via Web</li>
+	              <li>✔ IA treinada com linguagem acessível</li>
+	              <li>✔ Suporte basico por e-mail</li>
+	            </ul>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</section>
+
+	<div th:replace="~{fragmentos/frag :: rodape}"></div>
+	
+	<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+	<script>
+	  AOS.init();
+	</script>
+</body>
+</html>

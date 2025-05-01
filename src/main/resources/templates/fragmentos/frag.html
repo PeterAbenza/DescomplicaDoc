@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fragmentos</title>
+    <!-- Usando CDN para Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+	
+	<!-- Cabeçalho -->
+	<nav class="navbar navbar-expand-lg navbar-light" th:fragment="cabecalho" style="background-color: #1c1c1c; border: none;">
+	        <div class="container" >
+	            <a class="navbar-brand" href="#">
+	                <img src="/img/logo.png" alt="Logo" height="40px">
+	            </a>
+
+	            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+	                aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegação">
+	                <span class="navbar-toggler-icon"></span>
+	            </button>
+
+	            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+	                <ul class="navbar-nav">
+	                    <li class="nav-item"><a class="nav-link" href="/" style="color: white;">Home</a></li>
+	                    <li class="nav-item"><a class="nav-link" href="#beneficios" style="color: white;">Benefícios</a></li>
+	                    <li class="nav-item"><a class="nav-link" href="#planos" style="color: white;">Planos</a></li>
+	                </ul>
+	            </div>
+
+	            <div class="d-none d-lg-block">
+	                <a href="https://app.mygroupmetrics.com/" class="btn btn-primary" style="background-color: #a484e8; border: none;">Teste 3 resumos gratis</a>
+	            </div>
+	        </div>
+	    </nav>
+		
+		<footer class="text-white py-5 rodape" th:fragment="rodape" style="background-color: #1c1c1c; border-top: 2px solid #422f6f;">
+		  <div class="container" style="font-size: 17px;">
+		    <div class="row justify-content-center gy-4" >
+		      <!-- Fale conosco -->
+		      <div class="col-md-3 text-left">
+		        <h6 class="fw-bold mb-3" style="color: #c4aff0; font-size: 20px;">Fale conosco</h6>
+		        <ul class="list-unstyled">
+		          <li><a href="https://go.crisp.chat/chat/embed/?website_id=da83a367-45ec-4693-8155-fee20e8c8cb6" class="text-white text-decoration-none">Ajuda</a></li>
+		          <li><a href="https://status.chatadv.com.br/" class="text-white text-decoration-none">Status do Serviço</a></li>
+		        </ul>
+		      </div>
+
+		      <!-- Informações -->
+		      <div class="col-md-3 text-left">
+		        <h6 class="fw-bold mb-3" style="color: #c4aff0; font-size: 20px;">Informações</h6>
+		        <ul class="list-unstyled">
+		          <li><a href="https://chatadv.com.br/termos-de-uso/" class="text-white text-decoration-none">Termos de uso</a></li>
+		          <li><a href="https://chatadv.com.br/politicas-de-privacidade/" class="text-white text-decoration-none">Políticas de privacidade</a></li>
+		          <li><a href="https://chatadv.com.br/politica-de-reembolsos/" class="text-white text-decoration-none">Políticas de reembolso</a></li>
+		          <li><a href="https://app2.chatadv.com.br/auth/login" class="text-white text-decoration-none">Login</a></li>
+		          <li><a href="https://app2.chatadv.com.br/auth/esqueci-senha" class="text-white text-decoration-none">Recuperar Senha</a></li>
+		        </ul>
+		      </div>
+
+		      <!-- Redes sociais -->
+		      <div class="col-md-3 text-left">
+		        <h6 class="fw-bold mb-3" style="color: #c4aff0; font-size: 20px;">Redes sociais</h6>
+		        <ul class="list-unstyled">
+		          <li><a href="https://www.linkedin.com/in/peterabenza/" class="text-white text-decoration-none">Linkedin</a></li>
+		          <li><a href="https://github.com/PeterAbenza" class="text-white text-decoration-none">GitHub</a></li>
+		          <li><a href="https://www.linkedin.com/in/peterabenza/" class="text-white text-decoration-none">Desenvolvedor</a></li>
+		        </ul>
+		      </div>
+
+		      <!-- Copyright -->
+		      <div class="col-12 text-center mt-4">
+		        <p class="small mb-0">
+		          © 2025 DescomplicaDoc. Todos os direitos reservados
+		        </p>
+		      </div>
+		    </div>
+		  </div>
+		</footer>
+
+
+    
+    <!-- Scripts para o Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

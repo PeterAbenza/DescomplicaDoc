@@ -17,16 +17,15 @@ import com.descomplicadoc.descomplicadoc.repository.UsersRepository;
 
 @Controller
 public class registerController {
-	
+
 	@Autowired
-    private UsersRepository usersRepository;
-	
+	private UsersRepository usersRepository;
+
 	@Autowired
-    private PlanoRepository planoRepository;
-	
+	private PlanoRepository planoRepository;
+
 	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-	
 	@GetMapping("/register")
 	public ModelAndView showRegister() {
 		ModelAndView mv = new ModelAndView("registro/index");
@@ -36,34 +35,46 @@ public class registerController {
 	@PostMapping("/register")
 	public ModelAndView createuser(@RequestParam String nome, @RequestParam String email, @RequestParam String senha,
 			@RequestParam String confirmarSenha) {
-		
+
 		ModelAndView mv = new ModelAndView("registro/index");
-		
-		if (!senha.equals(confirmarSenha)) {
-		    mv.addObject("error", "As senhas não coincidem.");
-		    return mv;
+
+		// Verifica se o e-mail já está cadastrado
+		if (usersRepository.findByEmail(email).isPresent()) {
+			mv.addObject("error", "Este e-mail já está cadastrado.");
+			return mv;
 		}
 
+		// Verifica se a senha tem no mínimo 6 caracteres
+		if (senha.length() < 6) {
+			mv.addObject("error", "A senha deve ter no mínimo 6 caracteres.");
+			return mv;
+		}
+
+		// Verifica se as senhas coincidem
+		if (!senha.equals(confirmarSenha)) {
+			mv.addObject("error", "As senhas não coincidem.");
+			return mv;
+		}
 
 		Usuario newUser = new Usuario();
 		newUser.setNome(nome);
 		newUser.setEmail(email);
 		newUser.setSenha(passwordEncoder.encode(senha));
 		newUser.setDataCriacao(new Timestamp(System.currentTimeMillis()));
-		newUser.setDocumentosHoje(0);  // Se for um contador, por exemplo
+		newUser.setDocumentosHoje(0);
 
-		
-        Plano planoGratis = planoRepository.findById(1L).orElse(null); 
-        if (planoGratis != null) {
-            newUser.setPlano(planoGratis);
-        } else {
-            mv.addObject("error", "Plano gratuito não encontrado.");
-            return mv;
-        }
+		Plano planoGratis = planoRepository.findById(1L).orElse(null);
+		if (planoGratis != null) {
+			newUser.setPlano(planoGratis);
+		} else {
+			mv.addObject("error", "Plano gratuito não encontrado.");
+			return mv;
+		}
 
 		usersRepository.save(newUser);
 		mv.addObject("success", "Usuário registrado com sucesso!");
 
 		return mv;
 	}
+
 }

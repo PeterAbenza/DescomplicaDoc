@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DescomplicaDoc</title>
+    <!-- Usando CDN para Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	<link rel="stylesheet" href="/css/index.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+	<link rel="shortcut icon" href="/img/logoSolo.png" />
+</head>
+<body class="special-gothic-regular" >
+	
+	<div th:replace="~{fragmentos/frag :: cabecalho}"></div>
+	
+	
+	<section class="py-5 bg-light" id="upload-section" style="background: linear-gradient(to bottom, #1c1c1c, #422f6f);">
+	  <div class="container text-center">
+	    <div class="row justify-content-center" style="padding-top: 50px; padding-bottom: 70px;">
+	      <div class="col-md-8">
+	        <div class="card shadow-lg p-4" data-aos="fade-up">
+	          <div class="card-body">
+	            <i class="fas fa-file-pdf fa-4x  mb-3" style="color: #c4aff0;"></i>
+	            <h2 class="card-title font-weight-bold mb-3">Envie seu documento</h2>
+	            <p class="card-text text-muted mb-4">
+	              Traduza <strong>editais, contratos ou boletos</strong> em linguagem simples. Entenda o que está assinando sem depender de advogados!
+	            </p>
+	            <form method="post" action="/upload-pdf" enctype="multipart/form-data">
+	              <div class="custom-file mb-3 text-left">
+	                <input type="file" class="custom-file-input" id="pdfFile" name="file" accept="application/pdf" required>
+	                <label class="custom-file-label" for="pdfFile">Escolha seu PDF...</label>
+	              </div>
+	              <button type="submit" style="background-color: #c4aff0;" class="btn  btn-block btn-lg">
+	                <i class="fas fa-upload mr-2"></i> Enviar para Análise
+	              </button>
+	            </form>
+	            <small class="form-text text-muted mt-3">
+	              * Analisamos até <strong>1 documentos por mês</strong> gratuitamente.
+	            </small>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</section>
+
+	<script>
+	  // Atualiza o nome do arquivo no campo customizado
+	  document.querySelector('.custom-file-input').addEventListener('change', function(e) {
+	    var fileName = document.getElementById("pdfFile").files[0].name;
+	    var nextSibling = e.target.nextElementSibling
+	    nextSibling.innerText = fileName
+	  });
+	</script>
+
+	
+	<div th:replace="~{fragmentos/frag :: rodape}"></div>
+	
+	<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+	<script>
+	  AOS.init();
+	</script>
+</body>
+</html>

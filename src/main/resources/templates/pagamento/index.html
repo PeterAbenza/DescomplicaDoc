@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Pagamento | DescomplicaDoc</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	<style>
+		body {
+			background-color: #000;
+			color: #fff;
+		}
+
+		.card {
+			border: none;
+			border-radius: 12px;
+		}
+
+		.left-panel {
+			background-color: #111;
+			padding: 30px;
+			border-radius: 10px;
+		}
+
+		.right-panel {
+			background-color: #fff;
+			color: #000;
+			padding: 30px;
+			border-radius: 10px;
+		}
+
+		.form-control {
+			border-radius: 8px;
+		}
+
+		.pix-section,
+		.cartao-section {
+			display: none;
+		}
+
+		.ativo {
+			display: block;
+		}
+
+		.btn-toggle.active {
+			background-color: #198754;
+			color: white;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="container my-5">
+		<div class="row">
+
+			<!-- LADO ESQUERDO -->
+			<div class="col-md-6">
+				<div class="left-panel">
+					<h5><i class="fas fa-shopping-cart"></i> Carrinho</h5>
+					<hr>
+					<div class="mb-3">
+						<img src="/img/logoSolo.png" alt="Plano" width="40" class="mr-2">
+						<h4 th:text="${planoSelecionado.nome}">Nome do Plano</h4>
+						<p th:text="${planoSelecionado.descricao}">Descrição</p>
+					</div>
+
+					<ul>
+						<li><strong>Preço:</strong> R$ <span th:text="${planoSelecionado.preco}">0.00</span></li>
+						<li><strong>Limite Diário:</strong> <span th:text="${planoSelecionado.limite_diario}">0</span>
+							documentos</li>
+						<li><strong>Dias de Teste:</strong> <span th:text="${planoSelecionado.dias_teste}">0</span> dias
+						</li>
+					</ul>
+
+					<div class="form-group mt-4">
+						<input type="text" class="form-control" placeholder="Adicionar código promocional">
+					</div>
+
+					<hr>
+					<h4 class="text-right text-white">Total a Pagar: <strong>R$ <span th:text="${planoSelecionado.preco}">0.00</span></strong></h4>
+				</div>
+			</div>
+
+			<!-- LADO DIREITO -->
+			<div class="col-md-6">
+				<div class="right-panel">
+					<form>
+						<hr>
+						<h5>Método de Pagamento</h5>
+						<div class="btn-group btn-group-toggle mb-3 d-flex" data-toggle="buttons">
+							<button type="button" id="btnCartao"
+								class="btn btn-outline-primary btn-toggle active w-50">Cartão</button>
+							<button type="button" id="btnPix"
+								class="btn btn-outline-success btn-toggle w-50">PIX</button>
+						</div>
+
+						<!-- Cartão -->
+						<div id="cartaoForm" class="cartao-section ativo">
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Nome do titular">
+							</div>
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="1234 1234 1234 1234">
+							</div>
+							<div class="form-row">
+								<div class="form-group col-md-6">
+									<input type="text" class="form-control" placeholder="MM / AA">
+								</div>
+								<div class="form-group col-md-6">
+									<input type="text" class="form-control" placeholder="CVC">
+								</div>
+							</div>
+							<button type="submit" class="btn btn-success btn-block">Pagar com Cartão</button>
+						</div>
+
+						<!-- PIX -->
+						<div id="pixForm" class="pix-section">
+							<p>Escaneie o QR Code abaixo ou copie a chave:</p>
+							<img th:src="@{/qrcode(chave='abenzpeter@gmail.com', valor=${planoSelecionado.preco})}" class="img-fluid mb-2">
+							<div class="input-group">
+								<input type="text" class="form-control" value="abenzpeter@gmail.com" readonly>
+								<div class="input-group-append">
+									<button class="btn btn-outline-secondary" type="button"
+										onclick="copyPix()">Copiar</button>
+								</div>
+							</div>
+							<button type="submit" class="btn btn-success btn-block mt-3">Confirmar Pagamento via
+								PIX</button>
+						</div>
+					</form>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<script>
+		const btnCartao = document.getElementById('btnCartao');
+		const btnPix = document.getElementById('btnPix');
+		const cartaoForm = document.getElementById('cartaoForm');
+		const pixForm = document.getElementById('pixForm');
+
+		btnCartao.addEventListener('click', () => {
+			btnCartao.classList.add('active');
+			btnPix.classList.remove('active');
+			cartaoForm.classList.add('ativo');
+			pixForm.classList.remove('ativo');
+		});
+
+		btnPix.addEventListener('click', () => {
+			btnPix.classList.add('active');
+			btnCartao.classList.remove('active');
+			pixForm.classList.add('ativo');
+			cartaoForm.classList.remove('ativo');
+		});
+
+		function copyPix() {
+			const input = document.querySelector('#pixForm input');
+			input.select();
+			document.execCommand('copy');
+			alert('Chave PIX copiada!');
+		}
+	</script>
+
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

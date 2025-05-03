@@ -43,6 +43,12 @@ public class registerController {
 			mv.addObject("error", "Este e-mail já está cadastrado.");
 			return mv;
 		}
+		
+		if (nome.trim().contains(" ")) {
+			mv.addObject("error", "O nome não pode conter espaços.");
+		  
+		    return mv;
+		}
 
 		// Verifica se a senha tem no mínimo 6 caracteres
 		if (senha.length() < 6) {
@@ -73,8 +79,9 @@ public class registerController {
 
 		usersRepository.save(newUser);
 		mv.addObject("success", "Usuário registrado com sucesso!");
-
-		return mv;
+		
+		
+		return new ModelAndView("redirect:/login");
 	}
 
 }

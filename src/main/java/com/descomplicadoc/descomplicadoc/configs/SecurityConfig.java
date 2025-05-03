@@ -34,26 +34,29 @@ public class SecurityConfig {
 	// SecurityFilterChain para configurar regras de acesso
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	    http.csrf(csrf -> csrf
+	            .ignoringRequestMatchers("/upload-pdf")
+	    		)
+	    .authorizeHttpRequests(auth -> auth
+	            .requestMatchers("/", "/register","/upload-pdf", "/login", "/css/**", "/js/**", "/img/**", "/fonts/**")
+	            .permitAll()  // Permite acesso sem autenticação
+	            .anyRequest()
+	            .authenticated()  // Necessita autenticação para outras páginas
+	    )
+	    .formLogin(form -> form
+	            .loginPage("/login")
+	            .defaultSuccessUrl("/", true)
+	            .usernameParameter("email")
+	            .permitAll()
+	    )
+	    .logout(logout -> logout
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login?logout")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .permitAll()
+         );
 
-		http.authorizeHttpRequests(auth -> auth
-				.requestMatchers("/", "/uploadPDF", "/register", "/criar-conta",
-				"/css/**", "/js/**", "/img/**", "/fonts/**")
-				.permitAll()
-				.anyRequest()
-				.authenticated()
-				)
-				.formLogin(form -> form
-						.loginPage("/login")
-						.defaultSuccessUrl("/", true)
-						.usernameParameter("email")
-						.permitAll()
-				)
-				.logout(logout -> logout
-						.logoutUrl("/logout")
-						.logoutSuccessUrl("/login?logout")
-						.permitAll()
-				);
-
-		return http.build();
+	    return http.build();
 	}
 }

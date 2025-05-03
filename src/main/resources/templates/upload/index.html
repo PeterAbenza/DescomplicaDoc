@@ -39,9 +39,20 @@
 	                <i class="fas fa-upload mr-2"></i> Enviar para Análise
 	              </button>
 	            </form>
+				<div th:if="${sucesso}" class="alert alert-success">
+				    <p th:text="${sucesso}"></p>
+				</div>
+				<div th:if="${erro}" class="alert alert-danger">
+				    <p th:text="${erro}"></p>
+				</div>
 	            <small class="form-text text-muted mt-3">
 	              * Analisamos até <strong>1 documentos por mês</strong> gratuitamente.
 	            </small>
+				
+				<div th:if="${resumo}" class="alert alert-info">
+				    <h5>Resumo do Documento:</h5>
+				    <p th:text="${resumo}"></p>
+				</div>
 	          </div>
 	        </div>
 	      </div>

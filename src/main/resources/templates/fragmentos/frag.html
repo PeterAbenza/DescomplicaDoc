@@ -40,12 +40,12 @@
 				<!-- Se o usuário estiver logado, mostra a quantidade de documentos restantes -->
 				<div th:if="${session.email != null}">
 					<a href="/uploadPDF" class="btn btn-primary" style="background-color: #a484e8; border: none;">
-						Você tem <span th:text="${session.documentosRestantes}"></span> documentos para gerar
+						Resumos
 					</a>
 				</div>
 				<div th:if="${session.email == null}">
 					<a href="/uploadPDF" class="btn btn-primary" style="background-color: #a484e8; border: none;">
-						Teste 1 resumo grátis
+						Resumo Instantâneo!
 					</a>
 				</div>
 			</div>

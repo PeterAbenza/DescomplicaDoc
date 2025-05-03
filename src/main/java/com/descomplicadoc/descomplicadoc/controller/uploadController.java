@@ -3,6 +3,8 @@ package com.descomplicadoc.descomplicadoc.controller;
 import java.io.File;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -28,13 +30,21 @@ public class uploadController {
     private DocumentoRepository documentoRepository;
 
     @GetMapping("/uploadPDF")
-    public ModelAndView showHome() {
-        return new ModelAndView("upload/index");
+    public ModelAndView showHome(HttpSession session) {
+        ModelAndView mv = new ModelAndView("upload/index");
+
+        // Pega a lista de resumos da sessão (se existir)
+        List<String> resumos = (List<String>) session.getAttribute("resumos");
+        if (resumos == null) {
+            resumos = new ArrayList<>();
+        }
+
+        mv.addObject("resumos", resumos);
+        return mv;
     }
 
     @PostMapping("/upload-pdf")
     public String handleFileUpload(MultipartFile file, HttpSession session, RedirectAttributes redirectAttributes) {
-
         try {
             Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
 
@@ -43,24 +53,21 @@ public class uploadController {
                 return "redirect:/login";
             }
 
-            
             if (file == null || !file.getOriginalFilename().endsWith(".pdf")) {
                 redirectAttributes.addFlashAttribute("erro", "Somente arquivos PDF são permitidos.");
                 return "redirect:/uploadPDF";
             }
 
-            
-            String uploadDir = System.getProperty("user.home") + File.separator + "uploads"; // Direciona para a home do usuário
+            String uploadDir = System.getProperty("user.home") + File.separator + "uploads";
             File uploadPath = new File(uploadDir);
             if (!uploadPath.exists()) {
-                uploadPath.mkdirs(); // Cria a pasta se não existir
+                uploadPath.mkdirs();
             }
 
             String filePath = uploadDir + System.currentTimeMillis() + "_" + file.getOriginalFilename();
             File dest = new File(filePath);
             file.transferTo(dest);
 
-            
             Documento doc = new Documento();
             doc.setUsuario(usuario);
             doc.setNomeArquivo(file.getOriginalFilename());
@@ -69,48 +76,47 @@ public class uploadController {
             doc.setDataEnvio(Timestamp.from(Instant.now()));
             documentoRepository.save(doc);
 
-            
-            processarArquivo(doc, filePath, redirectAttributes);
+            // Processar o arquivo e adicionar resumo na sessão
+            processarArquivo(doc, filePath, session);
 
             redirectAttributes.addFlashAttribute("sucesso", "Documento enviado com sucesso!");
 
         } catch (Exception e) {
-        	e.printStackTrace(); 
-
+            e.printStackTrace();
             redirectAttributes.addFlashAttribute("erro", "Erro ao enviar o arquivo: " + e.getMessage());
         }
 
         return "redirect:/uploadPDF";
-    }	
-    
-    
+    }
+
     public String resumirTexto(String texto) {
-        
         String[] palavras = texto.split("\\s+");
         int numeroDePalavras = Math.min(palavras.length, 200);
         StringBuilder resumo = new StringBuilder();
-
         for (int i = 0; i < numeroDePalavras; i++) {
             resumo.append(palavras[i]).append(" ");
         }
-
-        return resumo.toString() + "..."; 
+        return resumo.toString() + "...";
     }
-    
+
     @Async
-    public void processarArquivo(Documento documento, String filePath, RedirectAttributes redirectAttributes) {
+    public void processarArquivo(Documento documento, String filePath, HttpSession session) {
         try {
-        	// Extrair texto do PDF usando PDFBox
             PDFExtractor extractor = new PDFExtractor();
             String extractedText = extractor.extractTextFromPDF(filePath);
-    
-
             String resumo = resumirTexto(extractedText);
 
-            redirectAttributes.addFlashAttribute("resumo", resumo);
+            // Adiciona o resumo à sessão
+            synchronized (session) {
+                List<String> resumos = (List<String>) session.getAttribute("resumos");
+                if (resumos == null) {
+                    resumos = new ArrayList<>();
+                }
+                resumos.add("Resumo do documento \"" + documento.getNomeArquivo() + "\": " + resumo);
+                session.setAttribute("resumos", resumos);
+            }
 
-            Thread.sleep(5000); 
-            documento.setStatus(StatusDocumento.CONCLUIDO); 
+            documento.setStatus(StatusDocumento.CONCLUIDO);
             documentoRepository.save(documento);
         } catch (Exception e) {
             documento.setStatus(StatusDocumento.FALHA);

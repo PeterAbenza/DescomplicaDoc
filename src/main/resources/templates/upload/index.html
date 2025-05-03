@@ -1,80 +1,141 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DescomplicaDoc</title>
-    <!-- Usando CDN para Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>DescomplicaDoc - Chat IA</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 	<link rel="stylesheet" href="/css/index.css">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
-	<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 	<link rel="shortcut icon" href="/img/logoSolo.png" />
+	<style>
+		/* Estilos existentes */
+		body {
+			background-color: #262626;
+			color: #fff;
+		}
+		.chat-wrapper {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 90vh;
+			margin-top: 50px;
+			margin-bottom: 80px;
+		}
+		.chat-container {
+			width: 100%;
+			max-width: 700px;
+			height: 80vh;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			padding: 20px;
+			border-radius: 10px;
+			background-color: #1f1f1f;
+			box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+		}
+		.chat-box {
+			flex-grow: 1;
+			overflow-y: auto;
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			margin-bottom: 15px;
+		}
+		.message {
+			padding: 10px 15px;
+			border-radius: 20px;
+			margin-bottom: 10px;
+			max-width: 75%;
+		}
+		.ia-message {
+			background-color: #333;
+			align-self: flex-start;
+			color: #ddd;
+		}
+		.user-message {
+			background-color: #6a1b9a;
+			align-self: flex-end;
+			color: white;
+		}
+		.chat-input-area {
+			margin-top: 10px;
+		}
+		.custom-file-label,
+		.form-control {
+			background-color: #2a2a2a;
+			color: #ddd;
+			border: 1px solid #444;
+		}
+		.custom-file-input:focus~.custom-file-label {
+			border-color: #6a1b9a;
+			box-shadow: none;
+		}
+		.btn-success {
+			background-color: #6a1b9a;
+			border-color: #6a1b9a;
+		}
+		.btn-success:hover {
+			background-color: #7c2bb3;
+		}
+		.custom-file-label::after {
+			content: "Procurar";
+			background-color: #444;
+			color: #ccc;
+		}
+	</style>
 </head>
-<body class="special-gothic-regular" >
-	
+
+<body>
+
 	<div th:replace="~{fragmentos/frag :: cabecalho}"></div>
-	
-	
-	<section class="py-5 bg-light" id="upload-section" style="background: linear-gradient(to bottom, #1c1c1c, #422f6f);">
-	  <div class="container text-center">
-	    <div class="row justify-content-center" style="padding-top: 50px; padding-bottom: 70px;">
-	      <div class="col-md-8">
-	        <div class="card shadow-lg p-4" data-aos="fade-up">
-	          <div class="card-body">
-	            <i class="fas fa-file-pdf fa-4x  mb-3" style="color: #c4aff0;"></i>
-	            <h2 class="card-title font-weight-bold mb-3">Envie seu documento</h2>
-	            <p class="card-text text-muted mb-4">
-	              Traduza <strong>editais, contratos ou boletos</strong> em linguagem simples. Entenda o que está assinando sem depender de advogados!
-	            </p>
-	            <form method="post" action="/upload-pdf" enctype="multipart/form-data">
-	              <div class="custom-file mb-3 text-left">
-	                <input type="file" class="custom-file-input" id="pdfFile" name="file" accept="application/pdf" required>
-	                <label class="custom-file-label" for="pdfFile">Escolha seu PDF...</label>
-	              </div>
-	              <button type="submit" style="background-color: #c4aff0;" class="btn  btn-block btn-lg">
-	                <i class="fas fa-upload mr-2"></i> Enviar para Análise
-	              </button>
-	            </form>
-				<div th:if="${sucesso}" class="alert alert-success">
-				    <p th:text="${sucesso}"></p>
-				</div>
-				<div th:if="${erro}" class="alert alert-danger">
-				    <p th:text="${erro}"></p>
-				</div>
-	            <small class="form-text text-muted mt-3">
-	              * Analisamos até <strong>1 documentos por mês</strong> gratuitamente.
-	            </small>
-				
-				<div th:if="${resumo}" class="alert alert-info">
-				    <h5>Resumo do Documento:</h5>
-				    <p th:text="${resumo}"></p>
-				</div>
-	          </div>
-	        </div>
-	      </div>
-	    </div>
-	  </div>
-	</section>
 
-	<script>
-	  // Atualiza o nome do arquivo no campo customizado
-	  document.querySelector('.custom-file-input').addEventListener('change', function(e) {
-	    var fileName = document.getElementById("pdfFile").files[0].name;
-	    var nextSibling = e.target.nextElementSibling
-	    nextSibling.innerText = fileName
-	  });
-	</script>
+	<div class="container-fluid chat-wrapper">
+		<div class="chat-container">
+			<!-- Mensagens -->
+			<div class="chat-box" id="chat-box">
+				<div class="message ia-message">Olá! Envie seu documento para resumir.</div>
+				<!-- Exibir o resumo retornado do Controller -->
+				<div th:each="resumo : ${resumos}" class="message ia-message">
+				     <span th:text="${resumo}"></span>
+				</div>
+			</div>
 
-	
+			<!-- Área de input e upload -->
+			<div class="chat-input-area">
+				<form method="post" action="/upload-pdf" enctype="multipart/form-data">
+					<div class="custom-file mb-2">
+						<input type="file" class="custom-file-input" id="pdfFile" name="file" accept="application/pdf"
+							required>
+						<label class="custom-file-label" for="pdfFile">Envie um PDF...</label>
+					</div>
+					<button type="submit" class="btn btn-success btn-block">
+						<i class="fas fa-upload mr-2"></i> Enviar PDF para Análise
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
 	<div th:replace="~{fragmentos/frag :: rodape}"></div>
-	
-	<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
 	<script>
-	  AOS.init();
+		document.querySelector('.custom-file-input').addEventListener('change', function (e) {
+			var fileName = e.target.files[0]?.name || "Escolha um arquivo";
+			e.target.nextElementSibling.innerText = fileName;
+		});
+
+		// Scroll automático para o fim do chat
+		window.addEventListener('load', function () {
+			const chatBox = document.getElementById('chat-box');
+			if (chatBox) {
+				chatBox.scrollTop = chatBox.scrollHeight;
+			}
+		});
 	</script>
+
+
 </body>
+
 </html>
